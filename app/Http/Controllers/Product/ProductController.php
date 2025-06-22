@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Product\Requests\CreateProductRequest;
+use App\Http\Controllers\Product\Services\CreateProductService;
 use App\Http\Controllers\Product\Services\ListProductService;
 use App\Http\Controllers\Product\Services\ShowProductService;
 use Illuminate\Http\Request;
@@ -15,14 +17,9 @@ class ProductController extends Controller
         return ListProductService::handle();
     }
 
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        return response()->json([
-            'status'  => 'success',
-            'code'    => 201,
-            'message' => 'Crear',
-            'data'    => [],
-        ]);
+        return CreateProductService::handle($request);
     }
 
     public function show($id)
