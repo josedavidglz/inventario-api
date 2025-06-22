@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Auth\Services\LoginService;
+use App\Http\Controllers\Auth\Services\LogoutService;
 use App\Http\Controllers\Auth\Services\RegisterService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -21,6 +22,6 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        return response()->json('logout');
+        return LogoutService::handle($request);
     }
 }
