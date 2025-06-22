@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -14,34 +15,24 @@ class RolesAndPermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Permisos para productos
-        Permission::create(['name' => 'create products']);
-        Permission::create(['name' => 'update products']);
-        Permission::create(['name' => 'delete products']);
-        Permission::create(['name' => 'view products']);
-        Permission::create(['name' => 'view product detail']);
+        Permission::firstOrCreate(['name' => 'create products', 'guard_name' => 'api']);
+        Permission::firstOrCreate(['name' => 'update products', 'guard_name' => 'api']);
+        Permission::firstOrCreate(['name' => 'delete products', 'guard_name' => 'api']);
+        Permission::firstOrCreate(['name' => 'view products', 'guard_name' => 'api']);
+        Permission::firstOrCreate(['name' => 'view product detail', 'guard_name' => 'api']);
 
-        // Permisos para categorías
-        Permission::create(['name' => 'view categories']);
-        Permission::create(['name' => 'create categories']);
-        Permission::create(['name' => 'update categories']);
-        Permission::create(['name' => 'delete categories']);
+        // Crear permisos de categorías
+        Permission::firstOrCreate(['name' => 'view categories', 'guard_name' => 'api']);
+        Permission::firstOrCreate(['name' => 'create categories', 'guard_name' => 'api']);
+        Permission::firstOrCreate(['name' => 'update categories', 'guard_name' => 'api']);
+        Permission::firstOrCreate(['name' => 'delete categories', 'guard_name' => 'api']);
 
-         // Crear roles
-        $admin = Role::firstOrCreate(['name' => 'admin']);
-        $user = Role::firstOrCreate(['name' => 'user']);
+        // Crear roles
+        $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'api']);
+        $user  = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'api']);
 
         // Asignar permisos al rol Admin
-        $admin->givePermissionTo([
-            'create products',
-            'update products',
-            'delete products',
-            'create categories',
-            'update categories',
-            'delete categories',
-            'view products',
-            'view product detail',
-        ]);
+        $admin->givePermissionTo(Permission::pluck('name'));
 
         // Asignar permisos al rol User
         $user->givePermissionTo([
@@ -49,6 +40,18 @@ class RolesAndPermissionsSeeder extends Seeder
             'view product detail',
             'view categories'
         ]);
+
+        // Crear usuario admin
+        $adminUser = User::firstOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('123456789'),
+            ]
+        );
+
+        // Asignar rol admin
+        $adminUser->assignRole('admin');
 
     }
 }
