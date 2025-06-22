@@ -1,11 +1,14 @@
 <?php
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -22,5 +25,30 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        
+         $exceptions->render(function (AuthorizationException $e, $request) {
+            return response()->json([
+                'status'  => 'error',
+                'code'    => 403,
+                'message' => 'No tienes permiso para acceder a este recurso.',
+            ], 403);
+        });
+
+        $exceptions->render(function (AuthenticationException $e, $request) {
+            return response()->json([
+                'status'  => 'error',
+                'code'    => 401,
+                'message' => 'No estás autenticado.',
+            ], 401);
+        });
+
+        // Opcional: manejar otros HttpException
+        $exceptions->render(function (HttpExceptionInterface $e, $request) {
+            return response()->json([
+                'status'  => 'error',
+                'code'    => $e->getStatusCode(),
+                'message' => $e->getMessage() ?: 'Error de servidor.',
+            ], $e->getStatusCode());
+        });
+
     })->create();
