@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\Requests\CreateProductRequest;
 use App\Http\Controllers\Product\Requests\UpdateProductRequest;
 use App\Http\Controllers\Product\Services\CreateProductService;
+use App\Http\Controllers\Product\Services\DeleteProductService;
 use App\Http\Controllers\Product\Services\ListProductService;
 use App\Http\Controllers\Product\Services\ShowProductService;
 use App\Http\Controllers\Product\Services\UpdateProductService;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -36,11 +36,6 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        return response()->json([
-            'status'  => 'success',
-            'code'    => 200,
-            'message' => 'Eliminar',
-            'data'    => ['id' => $id],
-        ]);
+        return DeleteProductService::handle($id);
     }
 }
