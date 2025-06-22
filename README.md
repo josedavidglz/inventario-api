@@ -1,61 +1,137 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 Laravel API - Inventario Api
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es una API REST construida con Laravel. Incluye autenticación con Laravel Sanctum, control de roles y permisos (Spatie), estructura modular y buenas prácticas para desarrollo de APIs modernas.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📦 Requisitos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP >= 8.1  
+- Composer  
+- MySQL o MariaDB  
+- Laravel CLI (`composer global require laravel/installer`)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ⚙️ Instalación
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Sigue estos pasos para poner en marcha el proyecto en tu entorno local:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Clonar el repositorio
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone https://github.com/josedavidglz/inventario-api.git
+cd inventario-api
+```
 
-## Laravel Sponsors
+### 2. Instalar dependencias 
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+composer install
+```
 
-### Premium Partners
+### 3. Configurar entorno 
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+### 4. Ejecutar migraciones 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan migrate
+```
 
-## Code of Conduct
+### 5. Ejecutar seeders 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan db:seed
+```
+Este comando creará un usuario administrador por defecto con todos los permisos habilitados:
 
-## Security Vulnerabilities
+- 📧 **Email**: `admin@gmail.com`  
+- 🔑 **Contraseña**: `123456789`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+### 6. Iniciar proyecto 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan serve
+```
+
+La aplicación estará disponible en:
+
+📍 http://localhost:8000 
+
+
+## 📬 Uso con Postman
+
+Para facilitar las pruebas de la API, se incluye una **colección Postman** exportada con todos los endpoints necesarios.
+
+### 📥 Importar colección en Postman
+
+1. Abre Postman.
+2. Haz clic en el botón **"Import"** (arriba a la izquierda).
+3. Selecciona la pestaña **"Archivo"**.
+4. Haz clic en **"Subir archivos"** y selecciona el archivo `laravel-api.postman_collection.json`
+5. La colección aparecerá en tu lista de colecciones, lista para usar.
+
+### 📥 Descargar colección Postman
+
+Puedes descargar la colección de Postman desde el siguiente enlace:
+
+👉 [Descargar colección desde OneDrive](https://1drv.ms/u/s!TuEnlaceGeneradoEjemplo)
+
+Una vez descargado, sigue los pasos de importación descritos en la sección anterior.
+
+### 🔐 Autenticación con token (Laravel Sanctum)
+
+1. Usa el endpoint de login para obtener el token:
+
+```http
+POST /api/login
+Content-Type: application/json
+
+{
+  "email": "admin@gmail.com",
+  "password": "123456789"
+}
+```
+
+## 🧠 Decisiones de Diseño
+
+A continuación se detallan algunas decisiones técnicas clave tomadas en el desarrollo de esta API.
+
+### 🎭 Enum vs Tabla de Roles
+
+Se optó por **una tabla de roles y permisos** (usando el paquete [Spatie Laravel-Permission](https://spatie.be/docs/laravel-permission)) en lugar de usar `enum` por las siguientes razones:
+
+- ✅ Permite gestionar roles y permisos desde la base de datos sin modificar el código.
+- ✅ Facilita la asignación dinámica de roles y permisos a usuarios.
+- ✅ Soporta relaciones de muchos a muchos (`users ↔ roles`, `roles ↔ permissions`).
+- ❌ Usar `enum` limitaría la flexibilidad y dificultaría la administración desde interfaces o seeds.
+
+### 🛡️ Middleware vs Paquete de Autorización
+
+Se eligió utilizar el paquete **Spatie Permission** en lugar de escribir middlewares personalizados por estas razones:
+
+- ✅ Permite usar middlewares como `role` y `permission` ya predefinidos (`->middleware('role:admin')`, etc.).
+- ✅ Incluye helpers como `hasRole()`, `can()`, `hasPermissionTo()`, que simplifican el control de acceso en controladores y policies.
+- ✅ Se integra bien con Laravel Sanctum y el sistema de autenticación nativo.
+
+> Aún así, es posible crear middlewares personalizados si se requiere una lógica más específica o basada en negocio.
+
+### 🗃️ Cambios al esquema de Base de Datos
+
+Se hicieron los siguientes ajustes respecto al esquema base de Laravel:
+
+- Se agregaron las tablas necesarias para roles y permisos (`roles`, `permissions`, `model_has_roles`, etc.) vía migraciones de Spatie.
+- Se creó un **seeder de roles y permisos** para poblar roles iniciales (`admin`, `user`, etc.).
+- Se creó un **usuario administrador** por defecto (`admin@gmail.com`, contraseña `123456789`) con todos los permisos asignados desde el seeder.
+
+### 🌐 Cambios a Endpoints
+
+- Se incorporó un **servicio de login** basado en Laravel Sanctum para emitir tokens personales.
+- Las respuestas de errores y excepciones fueron estandarizadas a **formato JSON**, incluyendo los errores capturados desde middlewares.
+- La API sigue una arquitectura RESTful clara y modular, orientada a escalabilidad futura.
