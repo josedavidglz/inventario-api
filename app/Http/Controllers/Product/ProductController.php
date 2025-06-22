@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\Services\ListProductService;
+use App\Http\Controllers\Product\Services\ShowProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -26,12 +27,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        return response()->json([
-            'status'  => 'success',
-            'code'    => 200,
-            'message' => 'Mostrar',
-            'data'    => ['id' => $id],
-        ]);
+        return ShowProductService::handle($id);
     }
 
     public function update(Request $request, $id)
