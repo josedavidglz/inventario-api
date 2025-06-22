@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Product\Requests\CreateProductRequest;
+use App\Http\Controllers\Product\Requests\UpdateProductRequest;
 use App\Http\Controllers\Product\Services\CreateProductService;
 use App\Http\Controllers\Product\Services\ListProductService;
 use App\Http\Controllers\Product\Services\ShowProductService;
+use App\Http\Controllers\Product\Services\UpdateProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -27,14 +29,9 @@ class ProductController extends Controller
         return ShowProductService::handle($id);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        return response()->json([
-            'status'  => 'success',
-            'code'    => 200,
-            'message' => 'Actualizar',
-            'data'    => ['id' => $id],
-        ]);
+        return UpdateProductService::handle($id, $request);
     }
 
     public function destroy($id)
