@@ -38,7 +38,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'create categories',
             'update categories',
             'delete categories',
-            'register users',
             'view products',
             'view product detail',
         ]);

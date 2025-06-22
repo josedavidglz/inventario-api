@@ -14,6 +14,15 @@ use App\Http\Controllers\Product\Services\UpdateProductService;
 class ProductController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('permission:view products')->only('index');
+        $this->middleware('permission:view product detail')->only('show');
+        $this->middleware('permission:create products')->only('store');
+        $this->middleware('permission:update products')->only('update');
+        $this->middleware('permission:delete products')->only('destroy');
+    }
+
     public function index()
     {
         return ListProductService::handle();
