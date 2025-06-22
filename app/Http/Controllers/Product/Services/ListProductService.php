@@ -30,7 +30,7 @@ class ListProductService
         } catch (\Exception $ex) {
             return response()->json([
                 'status'  => 'error',
-                'message' => 'No se pudo cargar los contactos.',
+                'message' => 'No se pudo cargar los productos.',
                 'error'   => $ex->getMessage()
             ], 500);
         }

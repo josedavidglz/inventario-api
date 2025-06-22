@@ -22,6 +22,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'view product detail']);
 
         // Permisos para categorías
+        Permission::create(['name' => 'view categories']);
         Permission::create(['name' => 'create categories']);
         Permission::create(['name' => 'update categories']);
         Permission::create(['name' => 'delete categories']);
@@ -46,6 +47,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->givePermissionTo([
             'view products',
             'view product detail',
+            'view categories'
         ]);
 
     }
