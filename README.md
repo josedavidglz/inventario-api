@@ -81,7 +81,7 @@ Para facilitar las pruebas de la API, se incluye una **colección Postman** expo
 
 Puedes descargar la colección de Postman desde el siguiente enlace:
 
-👉 [Descargar colección desde OneDrive](https://1drv.ms/u/s!TuEnlaceGeneradoEjemplo)
+👉 [Descargar colección desde OneDrive](https://drive.google.com/file/d/1SZ_CqwHYS8G73cVz36RRUCDjybke8asI/view?usp=sharing)
 
 Una vez descargado, sigue los pasos de importación descritos en la sección anterior.
 
@@ -130,8 +130,26 @@ Se hicieron los siguientes ajustes respecto al esquema base de Laravel:
 - Se creó un **seeder de roles y permisos** para poblar roles iniciales (`admin`, `user`, etc.).
 - Se creó un **usuario administrador** por defecto (`admin@gmail.com`, contraseña `123456789`) con todos los permisos asignados desde el seeder.
 
+### 🧹 Uso de SoftDeletes
+
+Se implementó `SoftDeletes` en modelos clave para evitar la eliminación definitiva de registros por las siguientes razones:
+
+- ✅ Permite conservar historial de datos eliminados (útil para auditoría o restauración).
+- ✅ Evita problemas de integridad referencial en relaciones con otras tablas.
+- ✅ Mejora la experiencia de administración y soporte, permitiendo "recuperar" registros eliminados por error.
+
+
 ### 🌐 Cambios a Endpoints
 
 - Se incorporó un **servicio de login** basado en Laravel Sanctum para emitir tokens personales.
 - Las respuestas de errores y excepciones fueron estandarizadas a **formato JSON**, incluyendo los errores capturados desde middlewares.
 - La API sigue una arquitectura RESTful clara y modular, orientada a escalabilidad futura.
+
+
+## 🌍 API Desplegada
+
+La API está disponible públicamente en la siguiente URL:
+
+🔗 [https://api-inventario.alvgoninnovations.com/](https://api-inventario.alvgoninnovations.com/)
+
+Puedes usar esta URL base para consumir los endpoints desde Postman, frontend u otras integraciones.
